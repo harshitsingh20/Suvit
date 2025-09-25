@@ -45,9 +45,9 @@ const Index = () => {
       <section className="px-4 sm:px-6 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+            {[1, 2, 3].map((index) => (
+              <BlogCard key={index} featured={false} />
+            ))}
           </div>
         </div>
       </section>

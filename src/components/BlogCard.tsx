@@ -1,53 +1,18 @@
 import { FC } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { format } from "date-fns";
-
-interface FeaturedBlog {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-  authorImage: string;
-  date: string;
-  tags: string[];
-}
+import { blogData } from "@/lib/blog-data";
+import automationBg from "@/assets/automation-bg.jpg";
+import featuredArticleBg from "@/assets/featured-article-bg.jpg";
 
 interface BlogCardProps {
   featured?: boolean;
 }
 
 const BlogCard: FC<BlogCardProps> = ({ featured = true }) => {
-  const { data: blogs, isLoading } = useQuery<FeaturedBlog[]>({
-    queryKey: ["featuredBlogs"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:3001/featuredBlogs");
-      return response.data;
-    },
-  });
-
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-border animate-pulse">
-        <div className="h-48 bg-gray-200" />
-        <div className="p-6 space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-3/4" />
-          <div className="h-4 bg-gray-200 rounded w-full" />
-          <div className="flex items-center justify-between pt-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gray-200" />
-              <div className="h-4 bg-gray-200 rounded w-24" />
-            </div>
-            <div className="h-4 bg-gray-200 rounded w-20" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const blog = blogs?.[0];
+  const blog = featured 
+    ? blogData.featuredBlogs[0] 
+    : blogData.blogs[Math.floor(Math.random() * blogData.blogs.length)];
 
   if (!blog) {
     return null;
@@ -58,7 +23,7 @@ const BlogCard: FC<BlogCardProps> = ({ featured = true }) => {
       {/* Image */}
       <div className="relative h-48">
         <img 
-          src={blog.image}
+          src={blog.image.includes('automation-bg') ? automationBg : featuredArticleBg}
           alt={blog.title}
           className="w-full h-full object-cover"
         />
