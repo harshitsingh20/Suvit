@@ -1,5 +1,6 @@
 import { Button } from "../components/ui/button";
 import { Facebook, Linkedin, MessageCircle } from "lucide-react";
+import automationBg from "@/assets/automation-bg.jpg";
 
 const Footer = () => {
   return (
@@ -27,7 +28,7 @@ const Footer = () => {
             {/* Right Side - Single Image */}
             <div className="relative hidden lg:block">
               <img
-                src="/src/assets/automation-bg.jpg"
+                src={automationBg}
                 alt="Automation"
                 className="w-full h-[400px] object-cover rounded-2xl shadow-xl"
               />
